@@ -1,24 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import Quizzes from "./components/Quizzes";
+import IntroPage from "./components/IntroPage";
+import { useState, useEffect } from "react";
 
 function App() {
+  const [quizzes, setQuizzes] = useState([]);
+  const [answerQuizz, setAnswerQuizz] = useState(false);
+  useEffect(() => {
+    let url =
+      "https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=multiple";
+    fetch(url)
+      .then(res => res.json())
+      .then(data => setQuizzes(data.results));
+  }, []);
+  console.log(quizzes);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      {answerQuizz ? (
+        <Quizzes />
+      ) : (
+        <IntroPage handleClick={() => setAnswerQuizz(true)} />
+      )}
+    </>
   );
 }
 

@@ -1,13 +1,61 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;500&family=Karla:wght@500;700&display=swap");
+:root {
+  --main-bg: #f5f7fb;
+  --main-text: #293264;
+  --input-checked-bg: #d6dbf5;
+  --header-font: "Karla";
+  --body-font: "Inter";
+  --border-radius: 0.5rem;
+}
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--main-bg);
+  color: var(--main-text);
 }
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.intro-page {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.intro-page h1 {
+  font-family: var(--header-font), sans-serif;
+  font-size: 2.5rem;
+}
+.btn {
+  color: #f5f7fb;
+  background-color: #4d5b9e;
+  padding: 0.5rem 1.5rem;
+  border-radius: var(--border-radius);
+  border: none;
+  font-family: var(--body-font), sans-serif;
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn:hover {
+  filter: brightness(130%);
+}
+input[type="radio"] {
+  appearance: none;
+  -webkit-appearance: none;
+  background-color: transparent;
+}
+label {
+  font-family: var(--body-font), sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--main-text);
+  background-color: transparent;
+  border: 1px solid #4d5b9e;
+  border-radius: var(--border-radius);
+  padding: 0.3rem 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+input[type="radio"]:checked + label {
+  background-color: var(--input-checked-bg);
+  border: 1px solid var(--input-checked-bg);
 }
