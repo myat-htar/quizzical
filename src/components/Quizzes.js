@@ -19,6 +19,7 @@ function Quizzes(props) {
               key={index}
               questionid={props.id}
               answerid={index}
+              handleChange={props.handleChange}
             />
           );
         })}

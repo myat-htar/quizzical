@@ -9,6 +9,7 @@ function Quiz(props) {
         name={`q-${props.questionid}-answer`}
         id={`q-${props.questionid}-answer-${props.answerid}`}
         value={props.answer}
+        onChange={props.handleChange}
       />
       <label htmlFor={`q-${props.questionid}-answer-${props.answerid}`}>
         {

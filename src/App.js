@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 function App() {
   const [quizzes, setQuizzes] = useState([]);
   const [answerQuizz, setAnswerQuizz] = useState(false);
+  const [answers, setAnswers] = useState({});
   console.log(quizzes);
   useEffect(() => {
     let url =
@@ -22,13 +23,26 @@ function App() {
         setQuizzes(quizzes);
       });
   }, []);
-
+  function handleChange(e) {
+    const { value, name } = e.target;
+    setAnswers(prevAnswers => {
+      return { ...prevAnswers, [name]: value };
+    });
+  }
+  console.log(answers);
   return (
     <>
       {answerQuizz ? (
-        <form action="">
+        <form>
           {quizzes.map((quiz, index) => {
-            return <Quizzes {...quiz} key={index} id={index} />;
+            return (
+              <Quizzes
+                {...quiz}
+                key={index}
+                id={index}
+                handleChange={handleChange}
+              />
+            );
           })}
           <button className="btn">Check Answers</button>
         </form>
