@@ -7,8 +7,14 @@
   --body-font: "Inter";
   --border-radius: 0.5rem;
 }
-body {
+*,
+*::before,
+*::after {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
   background-color: var(--main-bg);
   color: var(--main-text);
 }
@@ -22,6 +28,7 @@ body {
 .intro-page h1 {
   font-family: var(--header-font), sans-serif;
   font-size: 2.5rem;
+  line-height: 160%;
 }
 .btn {
   color: #f5f7fb;
@@ -37,6 +44,32 @@ body {
 }
 .btn:hover {
   filter: brightness(130%);
+}
+form {
+  width: 90%;
+  max-width: 50rem;
+  margin: 3rem auto;
+}
+.quiz {
+  padding: 1rem 0;
+  border-bottom: 1px solid #dbdef0;
+}
+.question {
+  font-family: var(--header-font), sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+.answers {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.5rem;
+}
+.answers {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  row-gap: 0.5rem;
 }
 input[type="radio"] {
   appearance: none;
@@ -58,4 +91,13 @@ label {
 input[type="radio"]:checked + label {
   background-color: var(--input-checked-bg);
   border: 1px solid var(--input-checked-bg);
+}
+form .btn {
+  display: block;
+  margin: 2rem auto;
+}
+@media (min-width: 30rem) {
+  .answers {
+    flex-direction: row;
+  }
 }
