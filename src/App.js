@@ -8,8 +8,9 @@ function App() {
   const [answers, setAnswers] = useState({});
   const [rightAnswersCount, setRightAnswersCount] = useState(0);
   const [submitAnswer, setSubmitAnswer] = useState(false);
-
+  const [playAgain, setPlayAgain] = useState(false);
   useEffect(() => {
+    console.log("run");
     let url =
       "https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=multiple";
     fetch(url)
@@ -24,7 +25,7 @@ function App() {
         });
         setQuizzes(quizzes);
       });
-  }, []);
+  }, [playAgain]);
   function handleChange(e) {
     const { value, name } = e.target;
     setAnswers(prevAnswers => {
@@ -40,7 +41,14 @@ function App() {
     });
     setSubmitAnswer(true);
   }
-  function reset() {}
+  function reset(e) {
+    e.preventDefault();
+    setAnswerQuizz(false);
+    setPlayAgain(prevState => !prevState);
+    setRightAnswersCount(0);
+    setSubmitAnswer(false);
+    setAnswers({});
+  }
   return (
     <>
       {answerQuizz ? (

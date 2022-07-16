@@ -18,6 +18,11 @@
 }
 body {
   background-color: var(--main-bg);
+  background-image: url(../public/blue\ blob.svg),
+    url(../public/yellow\ blob.svg);
+  background-repeat: no-repeat no-repeat;
+  background-position: 110% -80px, -100px 130%;
+  background-attachment: fixed;
   color: var(--main-text);
   font-family: var(--header-font), sans-serif;
 }
@@ -31,6 +36,9 @@ body {
 .intro-page h1 {
   font-size: 2.5rem;
   line-height: 160%;
+}
+.intro-page p {
+  margin-bottom: 1.5rem;
 }
 .btn {
   color: #f5f7fb;
@@ -59,23 +67,21 @@ form {
 .question {
   font-size: 1rem;
   font-weight: 700;
-  margin-bottom: 0.5rem;
-}
-.answers {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0.5rem;
+  margin-bottom: 1rem;
 }
 .answers {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  row-gap: 0.5rem;
+  row-gap: 1rem;
+  column-gap: 1rem;
 }
 input[type="radio"] {
   appearance: none;
   -webkit-appearance: none;
   background-color: transparent;
+  width: 0;
+  height: 0;
 }
 label {
   font-family: var(--body-font), sans-serif;
@@ -105,6 +111,7 @@ form .btn.play-again-btn {
   margin: auto;
 }
 .answer-info {
+  font-weight: 700;
   text-align: center;
   margin: 2rem 0 1rem;
 }
