@@ -15,11 +15,14 @@ function Quizzes(props) {
         {props.answers.map((answer, index) => {
           return (
             <Quiz
+              correctAnswer={props.correct_answer}
               answer={answer}
               key={index}
               questionid={props.id}
               answerid={index}
               handleChange={props.handleChange}
+              submitted={props.submitted}
+              submittedAnswers={props.submittedAnswers}
             />
           );
         })}

@@ -6,7 +6,9 @@ function App() {
   const [quizzes, setQuizzes] = useState([]);
   const [answerQuizz, setAnswerQuizz] = useState(false);
   const [answers, setAnswers] = useState({});
-  console.log(quizzes);
+  const [rightAnswersCount, setRightAnswersCount] = useState(0);
+  const [submitAnswer, setSubmitAnswer] = useState(false);
+
   useEffect(() => {
     let url =
       "https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=multiple";
@@ -29,11 +31,20 @@ function App() {
       return { ...prevAnswers, [name]: value };
     });
   }
-  console.log(answers);
+  function handleSubmit(e) {
+    e.preventDefault();
+    quizzes.forEach((quiz, index) => {
+      if (quiz.correct_answer === answers[`q-${index}-answer`]) {
+        setRightAnswersCount(prevCount => prevCount + 1);
+      }
+    });
+    setSubmitAnswer(true);
+  }
+  function reset() {}
   return (
     <>
       {answerQuizz ? (
-        <form>
+        <form onSubmit={handleSubmit}>
           {quizzes.map((quiz, index) => {
             return (
               <Quizzes
@@ -41,10 +52,23 @@ function App() {
                 key={index}
                 id={index}
                 handleChange={handleChange}
+                submitted={submitAnswer}
+                submittedAnswers={answers}
               />
             );
           })}
-          <button className="btn">Check Answers</button>
+          {!submitAnswer ? (
+            <button className="btn">Check Answers</button>
+          ) : (
+            <>
+              <p className="answer-info">
+                You scored {rightAnswersCount}/{quizzes.length} correct answers
+              </p>
+              <button className="btn play-again-btn" onClick={reset}>
+                Play Again
+              </button>
+            </>
+          )}
         </form>
       ) : (
         <IntroPage handleClick={() => setAnswerQuizz(true)} />
