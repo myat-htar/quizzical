@@ -4,16 +4,22 @@ import { useState, useEffect } from "react";
 
 function App() {
   const [quizzes, setQuizzes] = useState([]);
-  const [answerQuizz, setAnswerQuizz] = useState(false);
+  const [pageView, setPageView] = useState({
+    page: "intro-page",
+  });
   const [answers, setAnswers] = useState({});
   const [rightAnswersCount, setRightAnswersCount] = useState(0);
   const [submitAnswer, setSubmitAnswer] = useState(false);
   const [playAgain, setPlayAgain] = useState(false);
+  const [questionType, setQuestionType] = useState({
+    category: "",
+    difficulty: "",
+  });
   useEffect(() => {
     console.log("run");
-    let url =
-      "https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=multiple";
-    fetch(url)
+    fetch(
+      `https://opentdb.com/api.php?amount=10&category=${questionType.category}&difficulty=${questionType.difficulty}&type=multiple`
+    )
       .then(res => res.json())
       .then(data => data.results)
       .then(quizzes => {
@@ -25,12 +31,19 @@ function App() {
         });
         setQuizzes(quizzes);
       });
-  }, [playAgain]);
+  }, [playAgain, questionType]);
+  console.log(quizzes);
   function handleChange(e) {
-    const { value, name } = e.target;
-    setAnswers(prevAnswers => {
-      return { ...prevAnswers, [name]: value };
-    });
+    const { value, name, type } = e.target;
+    if (type === "radio") {
+      setAnswers(prevAnswers => {
+        return { ...prevAnswers, [name]: value };
+      });
+    } else {
+      setQuestionType(prevQuestionType => {
+        return { ...prevQuestionType, [name]: value };
+      });
+    }
   }
   function handleSubmit(e) {
     e.preventDefault();
@@ -43,7 +56,7 @@ function App() {
   }
   function reset(e) {
     e.preventDefault();
-    setAnswerQuizz(false);
+    setPageView({ page: "intro-page" });
     setPlayAgain(prevState => !prevState);
     setRightAnswersCount(0);
     setSubmitAnswer(false);
@@ -51,35 +64,54 @@ function App() {
   }
   return (
     <>
-      {answerQuizz ? (
-        <form onSubmit={handleSubmit}>
-          {quizzes.map((quiz, index) => {
-            return (
-              <Quizzes
-                {...quiz}
-                key={index}
-                id={index}
-                handleChange={handleChange}
-                submitted={submitAnswer}
-                submittedAnswers={answers}
-              />
-            );
-          })}
-          {!submitAnswer ? (
-            <button className="btn">Check Answers</button>
-          ) : (
-            <>
-              <p className="answer-info">
-                You scored {rightAnswersCount}/{quizzes.length} correct answers
-              </p>
-              <button className="btn play-again-btn" onClick={reset}>
-                Play Again
-              </button>
-            </>
-          )}
-        </form>
+      {pageView.page === "quiz-page" ? (
+        quizzes.length > 0 ? (
+          <form onSubmit={handleSubmit}>
+            {quizzes.map((quiz, index) => {
+              return (
+                <Quizzes
+                  {...quiz}
+                  key={index}
+                  id={index}
+                  handleChange={handleChange}
+                  submitted={submitAnswer}
+                  submittedAnswers={answers}
+                />
+              );
+            })}
+            {!submitAnswer ? (
+              <button className="btn">Check Answers</button>
+            ) : (
+              <>
+                <p className="answer-info">
+                  You scored {rightAnswersCount}/{quizzes.length} correct
+                  answers
+                </p>
+                <button className="btn play-again-btn" onClick={reset}>
+                  Play Again
+                </button>
+              </>
+            )}
+          </form>
+        ) : (
+          <div className="try-different">
+            <p>
+              There is no quiz for this question type. Please try different one
+            </p>
+            <button
+              className="btn"
+              onClick={() => setPageView({ page: "intro-page" })}
+            >
+              Try Different One
+            </button>
+          </div>
+        )
       ) : (
-        <IntroPage handleClick={() => setAnswerQuizz(true)} />
+        <IntroPage
+          handleClick={() => setPageView({ page: "quiz-page" })}
+          handleQuestionType={handleChange}
+          questionType={questionType}
+        />
       )}
     </>
   );

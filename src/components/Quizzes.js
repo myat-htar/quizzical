@@ -1,4 +1,4 @@
-import Quiz from "./Quiz";
+import QuizAnswers from "./QuizAnswers";
 function Quizzes(props) {
   const parser = new DOMParser();
   return (
@@ -14,7 +14,7 @@ function Quizzes(props) {
       <div className="answers">
         {props.answers.map((answer, index) => {
           return (
-            <Quiz
+            <QuizAnswers
               correctAnswer={props.correct_answer}
               answer={answer}
               key={index}
