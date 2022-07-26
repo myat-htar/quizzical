@@ -4,7 +4,7 @@ function IntroPage(props) {
   return (
     <div className="intro-page">
       <h1>Quizzical</h1>
-      <p>Answer quizzs and test your knowledge skills!</p>
+      <h3>Answer quizzs and test your knowledge skills!</h3>
       <p>Set your question Format</p>
       <form className="question-type">
         <label htmlFor="category" className="question-type-label">

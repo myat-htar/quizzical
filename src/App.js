@@ -1,7 +1,7 @@
 import Quizzes from "./components/Quizzes";
 import IntroPage from "./components/IntroPage";
 import { useState, useEffect } from "react";
-
+import Loading from "./components/Loading";
 function App() {
   const [quizzes, setQuizzes] = useState([]);
   const [pageView, setPageView] = useState({
@@ -10,13 +10,13 @@ function App() {
   const [answers, setAnswers] = useState({});
   const [rightAnswersCount, setRightAnswersCount] = useState(0);
   const [submitAnswer, setSubmitAnswer] = useState(false);
-  const [playAgain, setPlayAgain] = useState(false);
   const [questionType, setQuestionType] = useState({
     category: "",
     difficulty: "",
   });
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    console.log("run");
+    setLoading(true);
     fetch(
       `https://opentdb.com/api.php?amount=10&category=${questionType.category}&difficulty=${questionType.difficulty}&type=multiple`
     )
@@ -30,9 +30,9 @@ function App() {
           return quiz;
         });
         setQuizzes(quizzes);
+        setLoading(false);
       });
-  }, [playAgain, questionType]);
-  console.log(quizzes);
+  }, [pageView]);
   function handleChange(e) {
     const { value, name, type } = e.target;
     if (type === "radio") {
@@ -57,15 +57,15 @@ function App() {
   function reset(e) {
     e.preventDefault();
     setPageView({ page: "intro-page" });
-    setPlayAgain(prevState => !prevState);
     setRightAnswersCount(0);
     setSubmitAnswer(false);
     setAnswers({});
   }
   return (
     <>
-      {pageView.page === "quiz-page" ? (
-        quizzes.length > 0 ? (
+      {pageView.page === "quiz-page" &&
+        !loading &&
+        (quizzes.length > 0 ? (
           <form onSubmit={handleSubmit}>
             {quizzes.map((quiz, index) => {
               return (
@@ -105,8 +105,9 @@ function App() {
               Try Different One
             </button>
           </div>
-        )
-      ) : (
+        ))}
+      {pageView.page === "quiz-page" && loading && <Loading />}
+      {pageView.page === "intro-page" && (
         <IntroPage
           handleClick={() => setPageView({ page: "quiz-page" })}
           handleQuestionType={handleChange}

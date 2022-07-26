@@ -29,7 +29,7 @@ body {
 .intro-page {
   width: 90%;
   max-width: 50rem;
-  margin: 3rem auto;
+  margin: 0 auto;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -40,8 +40,9 @@ body {
   font-size: 2.5rem;
   line-height: 160%;
 }
-.intro-page p {
+.intro-page h3 {
   margin-bottom: 1.5rem;
+  text-align: center;
 }
 .btn {
   color: #f5f7fb;
@@ -58,17 +59,25 @@ body {
 .btn:hover {
   filter: brightness(130%);
 }
+.loading {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 form {
   width: 90%;
   max-width: 50rem;
-  margin: 3rem auto;
+  margin: 2rem auto;
 }
 .question-type {
+  width: 100%;
   max-width: 30rem;
   display: grid;
   grid-template-columns: 1fr;
 }
 .question-type select {
+  width: 100%;
   color: var(--main-text);
   height: 40px;
   border: 1px solid var(--border-color);
@@ -122,7 +131,7 @@ input[type="radio"]:checked + label {
   border: 1px solid var(--input-checked-bg);
 }
 input[type="radio"]:disabled + label {
-  cursor: none;
+  cursor: not-allowed;
   border: 1px solid var(--border-disabled-color);
 }
 form .btn {
